@@ -1,32 +1,32 @@
-# Ebook Factory com King Context
+# Ebook Factory with King Context
 
-Este e um use case simples: instale o King Context, abra o Codex neste projeto e peca um ebook.
+This is a simple use case: install King Context, open Codex in this project, and ask for an ebook.
 
-A skill `ebook-factory` faz o resto:
+The `ebook-factory` skill does the rest:
 
-- cria os corpora essenciais se eles ainda nao existirem;
-- pesquisa o tema com `king-research`;
-- consulta o conhecimento indexado com `kctx`;
-- escreve o manuscrito em Markdown;
-- entrega para `pdf-generator`;
-- gera HTML e PDF.
+- creates the required corpora if they do not exist yet;
+- researches the topic with `king-research`;
+- queries indexed knowledge with `kctx`;
+- writes the manuscript in Markdown;
+- hands it off to `pdf-generator`;
+- generates HTML and PDF.
 
-## Instalacao
+## Installation
 
-Na raiz do projeto:
+From the project root:
 
 ```powershell
 npx @king-context/cli init
 npm install
 ```
 
-Copie o arquivo de ambiente:
+Copy the environment template:
 
 ```powershell
 Copy-Item .king-context\.env.example .king-context\.env
 ```
 
-Preencha `.king-context/.env` com suas chaves:
+Fill `.king-context/.env` with your keys:
 
 ```text
 EXA_API_KEY=
@@ -35,50 +35,50 @@ JINA_API_KEY=
 FIRECRAWL_API_KEY=
 ```
 
-Para este use case, as principais sao `EXA_API_KEY` e `OPENROUTER_API_KEY`, usadas pelo `king-research`.
+For this use case, the main keys are `EXA_API_KEY` and `OPENROUTER_API_KEY`, used by `king-research`.
 
-## Uso
+## Usage
 
-Abra o Codex neste repositorio e peca:
+Open Codex in this repository and ask:
 
 ```text
-use ebook-factory para criar um ebook que fale sobre a evolucao da I.A desde seus primordios ate o momento atual de 2026
+use ebook-factory to create an ebook about the evolution of AI from its earliest beginnings to the current moment in 2026
 ```
 
-Ou troque o tema:
+Or change the topic:
 
 ```text
-use ebook-factory para criar um ebook sobre produtividade para programadores freelancers
-```
-
-```text
-use ebook-factory para criar um ebook sobre receitas brasileiras para vender no Paraguai
+use ebook-factory to create an ebook about productivity for freelance programmers
 ```
 
 ```text
-use ebook-factory para criar um ebook sobre estoicismo aplicado a vida moderna
+use ebook-factory to create an ebook about Brazilian recipes to sell in Paraguay
 ```
 
-E isso. A proposta do exemplo e mostrar que o King Context vira a camada de conhecimento local, enquanto a skill conduz o fluxo inteiro.
+```text
+use ebook-factory to create an ebook about Stoicism applied to modern life
+```
 
-## O Que Acontece Por Baixo
+That is it. The point of this example is to show how King Context becomes the local knowledge layer while the skill runs the whole ebook workflow.
 
-Quando voce chama `ebook-factory`, a skill:
+## What Happens Under The Hood
 
-1. verifica se existem os corpora essenciais `ebook-factory-*`;
-2. se faltar algum, cria automaticamente com `king-research`;
-3. transforma seu pedido em um brief editorial;
-4. cria ou reutiliza um corpus de pesquisa sobre o tema do ebook;
-5. consulta os corpora com `kctx`;
-6. escreve o Markdown;
-7. revisa estrutura, claims, etica e qualidade;
-8. gera o PDF com `pdf-generator`.
+When you call `ebook-factory`, the skill:
 
-Os corpora essenciais nao sao commitados. Eles sao gerados localmente na primeira execucao.
+1. checks whether the required `ebook-factory-*` corpora exist;
+2. creates any missing corpora automatically with `king-research`;
+3. turns your request into an editorial brief;
+4. creates or reuses a research corpus for the ebook topic;
+5. queries the corpora with `kctx`;
+6. writes the Markdown manuscript;
+7. reviews structure, claims, ethics, and quality;
+8. generates the PDF with `pdf-generator`.
 
-## Exemplo Incluido
+The required corpora are not committed. They are generated locally on the first run.
 
-Este repositorio inclui um exemplo ja gerado:
+## Included Example
+
+This repository includes an already generated example:
 
 ```text
 output/evolucao-da-ia-ate-2026.md
@@ -87,27 +87,27 @@ output/evolucao-da-ia-ate-2026.pdf
 output/build-evolucao-ia-2026.js
 ```
 
-Voce pode mante-los no repositorio para mostrar o resultado final, ou remove-los se quiser que o cookbook seja 100% regeneravel.
+You can keep these files in the repository to show the final result, or remove them if you want the cookbook example to be fully regenerated from scratch.
 
-Para reconstruir o PDF do exemplo:
+To rebuild the example PDF:
 
 ```powershell
 npm run build:example
 ```
 
-Para checar os scripts:
+To check the scripts:
 
 ```powershell
 npm run check:scripts
 ```
 
-No Windows, se o PowerShell bloquear `npm.ps1`, use:
+On Windows, if PowerShell blocks `npm.ps1`, use:
 
 ```powershell
 npm.cmd run check:scripts
 ```
 
-## Estrutura
+## Structure
 
 ```text
 .agents/skills/
@@ -121,12 +121,12 @@ npm.cmd run check:scripts
   .env.example
 
 output/
-  exemplo gerado
+  generated example
 ```
 
-## Para Publicar
+## Before Publishing
 
-Nao commite:
+Do not commit:
 
 ```text
 .king-context/.env
@@ -142,20 +142,20 @@ output/.chrome*/
 output/previews*/
 ```
 
-Esses itens ja estao no `.gitignore`.
+These paths are already listed in `.gitignore`.
 
-## Nota Para Mantenedores
+## Maintainer Note
 
-Os prompts que recriam os corpora essenciais ficam em:
+The prompts that recreate the required corpora live in:
 
 ```text
 .agents/skills/ebook-factory/assets/corpora/
 ```
 
-A regra esta em:
+The rule lives in:
 
 ```text
 .agents/skills/ebook-factory/SKILL.md
 ```
 
-Se os corpora essenciais nao existirem, a skill deve cria-los antes de escrever qualquer ebook.
+If the required corpora do not exist, the skill must create them before writing any ebook.
