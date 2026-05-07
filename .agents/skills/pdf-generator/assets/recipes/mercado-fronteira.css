@@ -1,0 +1,430 @@
+/* ===== Mercado Fronteira Recipe =====
+   Mood: warm, practical, premium cookbook, Brazil-Paraguay border market.
+   Reusable fit: cookbooks, recipe ebooks, local food guides, culinary product PDFs.
+   Corpus anchors:
+   - Bookstore-quality layout control: design-de-pdfs-para-ebooks/bookwright-tudo-o-que-precisa-para-criar-livros-com-qualidade-de-livraria
+   - Warm appetite color psychology: design-de-pdfs-para-ebooks/slideshow-psicologia-das-cores-e-tipografia-165140164-content
+   - Typographic hierarchy: design-de-pdfs-para-ebooks/cursos-cursos-de-editora-curso-de-diagramador-e1a59-grid-base-e-sistema-de-hierarquia-tipogr-fica
+   - Modular grid consistency: design-de-pdfs-para-ebooks/glossario-o-que-e-grade-modular-guia-completo-o-que-grade-modular
+   - Natural palette: design-de-pdfs-para-ebooks/pulse-tend%C3%AAncias-de-design-para-livros-impressos-e-ebooks-em-plouvier-4cckf-5-paletas-de-cores-suaves-e-naturais
+*/
+
+:root {
+  --ink: #211713;
+  --paper: #fff8eb;
+  --paper-alt: #f4ead7;
+  --cover-dark: #20372c;
+  --cover-warm: #b55232;
+  --corn: #d89a2b;
+  --herb: #5f7b4f;
+  --guava: #b8403f;
+  --muted: #735f4f;
+  --rule: #cda76a;
+  --soft-rule: rgba(115, 95, 79, 0.28);
+  --serif: Georgia, "Palatino Linotype", Palatino, "Book Antiqua", serif;
+  --display: Georgia, "Palatino Linotype", Palatino, serif;
+  --sans: "Segoe UI", Candara, system-ui, sans-serif;
+}
+
+@page {
+  size: 152mm 229mm;
+  margin: 18mm 16mm 21mm 18mm;
+  background: #fff8eb;
+}
+@page :left {
+  margin: 18mm 18mm 21mm 16mm;
+  background: #fff8eb;
+  @top-left {
+    content: "Sabores de Brasil";
+    font-family: var(--sans);
+    font-size: 7.2pt;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: rgba(115, 95, 79, 0.78);
+  }
+  @bottom-left {
+    content: counter(page);
+    font-family: var(--sans);
+    font-size: 8pt;
+    color: rgba(115, 95, 79, 0.82);
+  }
+}
+@page :right {
+  background: #fff8eb;
+  @top-right {
+    content: string(chapter-title);
+    font-family: var(--sans);
+    font-size: 7.2pt;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: rgba(115, 95, 79, 0.78);
+  }
+  @bottom-right {
+    content: counter(page);
+    font-family: var(--sans);
+    font-size: 8pt;
+    color: rgba(115, 95, 79, 0.82);
+  }
+}
+@page :first {
+  margin: 0;
+  background: #20372c;
+  @top-left { content: ""; }
+  @top-right { content: ""; }
+  @bottom-left { content: ""; }
+  @bottom-right { content: ""; }
+}
+@page no-header {
+  margin: 0;
+  background: #fff8eb;
+  @top-left { content: ""; }
+  @top-right { content: ""; }
+  @bottom-left { content: ""; }
+  @bottom-right { content: ""; }
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--serif);
+  font-size: 10pt;
+  line-height: 1.47;
+  text-rendering: optimizeLegibility;
+}
+
+p {
+  margin: 0 0 0.72em;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+ul,
+ol {
+  margin: 0.2em 0 0.9em 1.1em;
+  padding: 0;
+}
+
+li {
+  margin: 0 0 0.28em;
+}
+
+strong {
+  color: #3b281e;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0 1.2em;
+  font-family: var(--sans);
+  font-size: 8.2pt;
+}
+
+th {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: left;
+  color: var(--cover-dark);
+  border-bottom: 0.45mm solid var(--rule);
+  padding: 0.3em 0.2em;
+}
+
+td {
+  border-bottom: 0.2mm solid rgba(115, 95, 79, 0.2);
+  padding: 0.42em 0.2em;
+  vertical-align: top;
+}
+
+.cover {
+  page: no-header;
+  width: 152mm;
+  height: 229mm;
+  box-sizing: border-box;
+  padding: 18mm 17mm;
+  page-break-before: always;
+  position: relative;
+  color: #fff8eb;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(216,154,43,0.34), transparent 22mm),
+    radial-gradient(circle at 20% 82%, rgba(181,82,50,0.42), transparent 36mm),
+    linear-gradient(145deg, #20372c 0%, #263f32 52%, #6f3c2c 120%);
+}
+
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 11mm;
+  border: 0.35mm solid rgba(255,248,235,0.46);
+}
+
+.cover-kicker,
+.cover-edition,
+.recipe-meta,
+.toc-kicker,
+.section-label {
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 7.2pt;
+}
+
+.cover-kicker {
+  margin-top: 42mm;
+  color: rgba(255,248,235,0.72);
+}
+
+.cover h1 {
+  font-family: var(--display);
+  font-size: 31pt;
+  line-height: 0.95;
+  letter-spacing: 0;
+  margin: 9mm 0 4mm;
+  max-width: 102mm;
+}
+
+.cover-subtitle {
+  font-style: italic;
+  color: rgba(255,248,235,0.84);
+  max-width: 92mm;
+}
+
+.cover-mark {
+  position: absolute;
+  left: 24mm;
+  bottom: 31mm;
+  width: 74mm;
+  height: 1.1mm;
+  background: linear-gradient(90deg, var(--corn), var(--guava), var(--herb));
+}
+
+.cover-edition {
+  position: absolute;
+  bottom: 21mm;
+  left: 24mm;
+  color: rgba(255,248,235,0.76);
+}
+
+.title-page,
+.copyright,
+.toc,
+.part-divider,
+.colophon {
+  page: no-header;
+  min-height: 229mm;
+  box-sizing: border-box;
+  page-break-before: always;
+}
+
+.title-page {
+  padding: 46mm 22mm 24mm;
+  text-align: center;
+}
+
+.title-page h1 {
+  font-family: var(--display);
+  font-size: 27pt;
+  line-height: 1;
+  margin: 0 auto 5mm;
+  max-width: 106mm;
+}
+
+.title-page .subtitle {
+  font-style: italic;
+  color: var(--muted);
+  max-width: 90mm;
+  margin: 0 auto 18mm;
+}
+
+.title-page .ornament,
+.part-divider .ornament {
+  width: 36mm;
+  height: 0.55mm;
+  background: linear-gradient(90deg, var(--corn), var(--guava), var(--herb));
+  margin: 0 auto;
+}
+
+.copyright,
+.colophon {
+  padding: 34mm 22mm 24mm;
+  font-family: var(--sans);
+  font-size: 8.5pt;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.toc {
+  padding: 21mm 16mm 18mm;
+}
+
+.toc-kicker {
+  color: var(--herb);
+  margin-bottom: 5mm;
+}
+
+.toc h2 {
+  font-family: var(--display);
+  font-size: 22pt;
+  margin: 0 0 8mm;
+}
+
+.toc-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 3mm;
+  align-items: baseline;
+  margin: 0 0 2.2mm;
+  font-size: 9.5pt;
+}
+
+.toc-row.part {
+  margin-top: 5mm;
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--herb);
+  font-size: 8pt;
+}
+
+.toc-dots {
+  border-bottom: 0.2mm dotted rgba(115,95,79,0.45);
+  transform: translateY(-1.5mm);
+}
+
+.part-divider {
+  padding: 51mm 19mm 26mm;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(216,154,43,0.12), transparent 30%),
+    var(--paper);
+}
+
+.part-divider .section-label {
+  color: var(--guava);
+  margin-bottom: 9mm;
+}
+
+.part-divider h1 {
+  font-family: var(--display);
+  font-size: 24pt;
+  line-height: 1.07;
+  margin: 0 auto 10mm;
+  max-width: 104mm;
+}
+
+.part-divider .part-note {
+  font-style: italic;
+  color: var(--muted);
+  max-width: 86mm;
+  margin: 10mm auto 0;
+}
+
+.chapter,
+.appendix {
+  page-break-before: always;
+}
+
+.chapter h2,
+.appendix h1 {
+  string-set: chapter-title content(text);
+  font-family: var(--display);
+  font-size: 20pt;
+  line-height: 1.08;
+  margin: 0 0 5mm;
+  padding-bottom: 4mm;
+  border-bottom: 0.45mm solid var(--rule);
+}
+
+.chapter .recipe-meta {
+  display: inline-block;
+  color: var(--guava);
+  margin: 0 0 3mm;
+}
+
+.chapter h3,
+.appendix h2 {
+  font-family: var(--sans);
+  font-size: 8.4pt;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cover-dark);
+  margin: 5mm 0 2mm;
+  break-after: avoid-page;
+  page-break-after: avoid;
+}
+
+.chapter h3 + ul {
+  background: var(--paper-alt);
+  border-left: 1.2mm solid var(--corn);
+  padding: 3mm 4mm 3mm 6mm;
+  margin-left: 0;
+  list-style-position: outside;
+  break-before: avoid-page;
+  page-break-before: avoid;
+}
+
+.chapter h3 + ol {
+  border-left: 1.2mm solid var(--herb);
+  padding-left: 7mm;
+  break-before: avoid-page;
+  page-break-before: avoid;
+}
+
+.chapter h3 + p {
+  break-before: avoid-page;
+  page-break-before: avoid;
+}
+
+.chapter p:first-of-type::first-letter {
+  font-family: var(--display);
+  font-size: 34pt;
+  line-height: 0.85;
+  float: left;
+  padding-right: 1.4mm;
+  color: var(--guava);
+}
+
+.frontmatter {
+  page-break-before: always;
+}
+
+.frontmatter h2 {
+  string-set: chapter-title content(text);
+  font-family: var(--display);
+  font-size: 19pt;
+  margin: 0 0 5mm;
+  border-bottom: 0.45mm solid var(--rule);
+  padding-bottom: 4mm;
+}
+
+.frontmatter p:first-of-type::first-letter {
+  font-family: var(--display);
+  font-size: 30pt;
+  line-height: 0.85;
+  float: left;
+  padding-right: 1.2mm;
+  color: var(--herb);
+}
+
+.appendix {
+  page-break-before: always;
+}
+
+.appendix h1 {
+  font-size: 18pt;
+}
+
+.colophon h2 {
+  font-family: var(--display);
+  font-size: 18pt;
+  color: var(--ink);
+}
+
+a {
+  color: var(--guava);
+  text-decoration: none;
+}

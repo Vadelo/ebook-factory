@@ -1,0 +1,17 @@
+/* ===== Stoic Recipe =====
+   Mood: timeless, solemn, contemplative.
+   Apply: this overlays variables ONTO _base/style.css.
+   Pair with cover ornament: ❦ (floral heart). */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --ink: #0a0a0a;
+  --paper: #fdfcf8;
+  --rule: #1a1a1a;
+  --muted: #555;
+  --whisper: #888;
+  --serif: 'EB Garamond', 'Garamond', 'Times New Roman', serif;
+  --display: 'Cormorant Garamond', 'EB Garamond', serif;
+  --sans: 'Inter', system-ui, sans-serif;
+}

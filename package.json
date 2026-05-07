@@ -1,0 +1,22 @@
+{
+  "name": "kingcontext-ebook-factory-usecase",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cookbook use case showing how to adapt King Context skills to research, write, and render ebooks.",
+  "scripts": {
+    "build:example": "node output/build-evolucao-ia-2026.js",
+    "check:scripts": "node --check output/build-evolucao-ia-2026.js && node --check .agents/skills/pdf-generator/assets/templates/_base/build.js && node --check .agents/skills/pdf-generator/assets/templates/stoic/build.js"
+  },
+  "keywords": [
+    "king-context",
+    "ebook",
+    "codex-skills",
+    "cookbook"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "marked": "^18.0.3"
+  }
+}

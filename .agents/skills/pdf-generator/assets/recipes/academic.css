@@ -1,0 +1,50 @@
+/* ===== Academic Recipe =====
+   Mood: scholarly, dense, cited.
+   Pair with cover ornament: none (pure rule).
+   Differences from stoic: tighter line-height, no drop caps, footnotes styled. */
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink: #1a1a1a;
+  --paper: #ffffff;
+  --rule: #444;
+  --muted: #555;
+  --whisper: #777;
+  --serif: 'Crimson Pro', 'Garamond', serif;
+  --display: 'Crimson Pro', serif;
+  --sans: 'Source Sans 3', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+body { font-size: 10pt; line-height: 1.45; }
+
+/* Disable drop caps for academic style */
+.chapter > .chapter-body > p:first-of-type::first-letter {
+  font-size: inherit;
+  float: none;
+  margin: 0;
+  font-weight: inherit;
+  font-family: inherit;
+}
+.chapter > .chapter-body > p:first-of-type::first-line {
+  font-variant: normal;
+  letter-spacing: normal;
+  font-size: inherit;
+}
+.chapter > .chapter-body > p:first-of-type { text-indent: 0; }
+
+/* Footnote styling (use <span class="footnote">N</span> in markdown post-process) */
+.footnote {
+  font-size: 0.75em;
+  vertical-align: super;
+  color: var(--muted);
+}
+.footnote-text {
+  font-size: 8.5pt;
+  line-height: 1.4;
+  color: var(--muted);
+  border-top: 0.4pt solid var(--rule);
+  padding-top: 0.6em;
+  margin-top: 1.5em;
+}

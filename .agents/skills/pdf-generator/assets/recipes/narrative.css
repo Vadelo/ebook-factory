@@ -1,0 +1,41 @@
+/* ===== Narrative / Literary Recipe =====
+   Mood: storytelling, intimate, novelistic.
+   Pair with cover ornament: * * * for scene breaks.
+   Differences from stoic: warmer paper, drop caps on every chapter, italic display. */
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+
+:root {
+  --ink: #1c1c1c;
+  --paper: #f8f5ee;
+  --rule: #2a2a2a;
+  --muted: #4a4a4a;
+  --whisper: #888;
+  --serif: 'Lora', 'Georgia', serif;
+  --display: 'Playfair Display', 'Lora', serif;
+  --sans: 'Lora', serif;
+}
+
+body { font-size: 11pt; line-height: 1.6; }
+
+/* Italic chapter titles for novelistic feel */
+.chapter-title {
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Scene break ornament: * * * */
+hr::before {
+  content: "* * *";
+  font-family: var(--serif);
+  letter-spacing: 0.5em;
+  font-size: 11pt;
+}
+hr { width: 30%; }
+
+/* Drop cap larger and bolder */
+.chapter > .chapter-body > p:first-of-type::first-letter {
+  font-size: 5em;
+  font-weight: 700;
+  font-style: normal;
+}

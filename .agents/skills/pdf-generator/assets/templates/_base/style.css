@@ -1,0 +1,720 @@
+/* ============================================================
+   ESTOICISMO NA ERA MODERNA — Design Premium para PDF
+   Paleta: preto puro + branco + escala neutra
+   Tipografia: serifa clássica para corpo, display elegante
+   Sistema: ritmo vertical baseado em 1 linha = 16px
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ---------- Reset suave ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------- Variáveis ---------- */
+:root {
+  --ink: #0a0a0a;          /* preto tipográfico, levemente acinzentado para reduzir cansaço */
+  --paper: #fdfcf8;        /* off-white tipográfico — tom de papel marfim */
+  --rule: #1a1a1a;         /* fios e divisores */
+  --muted: #555;           /* texto secundário */
+  --whisper: #888;         /* numeração, captions */
+  --accent: #0a0a0a;
+
+  --serif: 'EB Garamond', 'Garamond', 'Times New Roman', serif;
+  --display: 'Cormorant Garamond', 'EB Garamond', 'Garamond', serif;
+  --sans: 'Inter', -apple-system, system-ui, sans-serif;
+}
+
+/* ---------- Página ---------- */
+@page {
+  size: 152mm 229mm;        /* Royal-ish, próximo de 6"x9" — referência clássica de livros */
+  margin: 22mm 18mm 24mm 22mm; /* superior, externa, inferior, interna (gutter maior) */
+  background: var(--paper);
+}
+@page :left {
+  margin: 22mm 22mm 24mm 18mm;
+  background: var(--paper);
+  @bottom-left  { content: counter(page); font-family: var(--serif); font-size: 9pt; color: var(--whisper); }
+  @top-left     { content: "Estoicismo na Era Moderna"; font-family: var(--display); font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: var(--whisper); }
+}
+@page :right {
+  background: var(--paper);
+  @bottom-right { content: counter(page); font-family: var(--serif); font-size: 9pt; color: var(--whisper); }
+  @top-right    { content: string(chapter-title); font-family: var(--display); font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: var(--whisper); font-style: italic; }
+}
+@page :first  { margin: 0; background: var(--ink); @top-left{content:""} @top-right{content:""} @bottom-left{content:""} @bottom-right{content:""} }
+@page no-header {
+  margin: 0;
+  background: var(--paper);
+  @top-left { content: ""; }
+  @top-right { content: ""; }
+  @bottom-left { content: ""; }
+  @bottom-right { content: ""; }
+}
+
+/* ---------- Corpo ---------- */
+html { background: var(--paper); }
+body {
+  font-family: var(--serif);
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* ---------- Tipografia base ---------- */
+p {
+  text-align: justify;
+  text-indent: 1.2em;
+  margin: 0;
+  orphans: 3;
+  widows: 3;
+}
+p + p { margin-top: 0; }
+
+/* Primeiro parágrafo após heading sem indent */
+h1 + p, h2 + p, h3 + p, h4 + p,
+.chapter-title + p,
+.chapter-opening + p,
+section > p:first-of-type { text-indent: 0; }
+
+em, i { font-style: italic; }
+strong, b { font-weight: 600; }
+small { font-size: 0.82em; letter-spacing: 0.04em; }
+
+a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; }
+
+/* ---------- Listas ---------- */
+ul, ol {
+  margin: 0.6em 0 0.6em 1.4em;
+  padding: 0;
+}
+li { margin: 0.18em 0; line-height: 1.5; }
+li::marker { color: var(--muted); }
+
+/* ---------- Blockquotes ---------- */
+blockquote {
+  margin: 1.1em 0 1.1em 1.6em;
+  padding: 0 0 0 0.9em;
+  border-left: 0.5pt solid var(--rule);
+  font-style: italic;
+  color: var(--muted);
+  font-size: 0.97em;
+}
+blockquote p { text-align: left; text-indent: 0; }
+
+hr {
+  border: none;
+  width: 28%;
+  margin: 2em auto;
+  text-align: center;
+  height: 0.3em;
+  background: transparent;
+  position: relative;
+}
+hr::before {
+  content: "❦";
+  position: absolute;
+  inset: 0;
+  display: block;
+  text-align: center;
+  font-family: var(--display);
+  font-size: 14pt;
+  color: var(--ink);
+  line-height: 1;
+  font-style: italic;
+}
+
+/* ============================================================
+   COVER (capa)
+   ============================================================ */
+.cover {
+  page: no-header;
+  /* True bleed surface: exact physical height is intentional here. */
+  height: 229mm;
+  width: 152mm;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0 0 0 3mm var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  text-align: center;
+}
+.cover-frame {
+  position: absolute;
+  inset: 14mm;
+  border: 0.4pt solid rgba(253, 252, 248, 0.55);
+  pointer-events: none;
+}
+.cover-top {
+  margin-top: 26mm;
+  padding: 0 16mm;
+  z-index: 2;
+}
+.cover-mark {
+  font-family: var(--display);
+  font-size: 9pt;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: rgba(253, 252, 248, 0.7);
+  margin-bottom: 4mm;
+}
+.cover-mark::before, .cover-mark::after { content: " — "; opacity: 0.6; }
+
+.cover-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 38pt;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: var(--paper);
+  margin-top: 6mm;
+}
+.cover-title em {
+  font-style: italic;
+  font-weight: 300;
+  font-size: 0.95em;
+  display: block;
+}
+.cover-subtitle {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 13pt;
+  line-height: 1.4;
+  margin-top: 8mm;
+  color: rgba(253, 252, 248, 0.85);
+  letter-spacing: 0.02em;
+}
+
+.cover-symbol {
+  font-family: var(--display);
+  font-size: 50pt;
+  color: var(--paper);
+  line-height: 1;
+  margin: auto;
+  z-index: 2;
+  font-weight: 300;
+}
+.cover-symbol-rule {
+  width: 26mm;
+  height: 0.6pt;
+  background: rgba(253, 252, 248, 0.7);
+  margin: 6mm auto;
+}
+
+.cover-bottom {
+  margin-bottom: 22mm;
+  padding: 0 16mm;
+  z-index: 2;
+}
+.cover-author {
+  font-family: var(--display);
+  font-size: 14pt;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--paper);
+  font-weight: 400;
+}
+.cover-publisher {
+  margin-top: 6mm;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 9pt;
+  letter-spacing: 0.18em;
+  color: rgba(253, 252, 248, 0.7);
+}
+
+/* ============================================================
+   FRONT-MATTER
+   ============================================================ */
+.title-page {
+  page: no-header;
+  page-break-before: always;
+  break-before: page;
+  display: block;
+  text-align: center;
+  padding: 60mm 16mm 30mm;
+  overflow: hidden;
+}
+.title-page-mark {
+  font-family: var(--display);
+  font-size: 9pt;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10mm;
+}
+.title-page-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 36pt;
+  line-height: 1.08;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.title-page-subtitle {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 14pt;
+  margin-top: 8mm;
+  color: var(--muted);
+  text-align: center;
+}
+.title-page-rule {
+  width: 22mm;
+  height: 0.6pt;
+  background: var(--rule);
+  margin: 12mm auto;
+}
+.title-page-author {
+  font-family: var(--display);
+  font-size: 13pt;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.title-page-publisher {
+  margin-top: 8mm;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 10pt;
+  color: var(--muted);
+  letter-spacing: 0.18em;
+}
+
+.copyright-page {
+  page: no-header;
+  page-break-before: always;
+  break-before: page;
+  display: block;
+  padding: 96mm 22mm 26mm;
+  font-family: var(--serif);
+  font-size: 8.8pt;
+  line-height: 1.5;
+  color: var(--muted);
+  text-align: left;
+  overflow: hidden;
+}
+.copyright-page p { text-indent: 0; margin-bottom: 0.55em; text-align: left; }
+.copyright-page p:last-child { margin-bottom: 0; }
+.copyright-page strong { color: var(--ink); }
+
+.epigraph-page {
+  page: no-header;
+  page-break-before: always;
+  break-before: page;
+  display: block;
+  padding: 82mm 30mm 72mm;
+  text-align: center;
+  overflow: hidden;
+}
+.epigraph-quote {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16pt;
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 100mm;
+  text-align: center;
+  text-indent: 0;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+.epigraph-attr {
+  margin-top: 10mm;
+  font-family: var(--display);
+  font-size: 9.5pt;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  text-indent: 0;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   SUMÁRIO (TOC)
+   ============================================================ */
+.toc {
+  page-break-before: always;
+  break-before: page;
+  display: block;
+  padding-top: 8mm;
+  min-height: 170mm;
+  overflow: hidden;
+}
+.toc h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 26pt;
+  text-align: center;
+  letter-spacing: 0.04em;
+  margin-bottom: 4mm;
+  color: var(--ink);
+}
+.toc-rule {
+  width: 18mm;
+  height: 0.6pt;
+  background: var(--rule);
+  margin: 0 auto 12mm;
+}
+.toc-part {
+  margin-top: 8mm;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 10pt;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 0.4pt solid var(--rule);
+  padding-bottom: 1.5mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6mm;
+}
+.toc-part > span:first-child { flex: 1; }
+.toc-part .toc-part-num {
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: var(--muted);
+}
+.toc-chapter {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--serif);
+  font-size: 10.5pt;
+  margin: 2.4mm 0 2.4mm 0;
+  color: var(--ink);
+}
+.toc-chapter-num {
+  font-variant: small-caps;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  min-width: 20mm;
+  font-size: 9.5pt;
+}
+.toc-chapter-title {
+  flex: 1;
+  font-family: var(--serif);
+}
+.toc-chapter-leader {
+  flex: 1;
+  border-bottom: 0.4pt dotted var(--whisper);
+  margin: 0 2mm 4pt;
+  height: 1pt;
+}
+.toc-chapter-page {
+  font-family: var(--serif);
+  font-variant-numeric: oldstyle-nums;
+  color: var(--muted);
+  font-size: 10pt;
+}
+.toc-extra .toc-chapter-num { min-width: auto; }
+
+/* ============================================================
+   PARTES (page openers)
+   ============================================================ */
+.part {
+  page: no-header;
+  page-break-before: always;
+  break-before: page;
+  display: block;
+  text-align: center;
+  padding: 62mm 24mm 56mm;
+  overflow: hidden;
+}
+.part-eyebrow {
+  font-family: var(--display);
+  font-size: 9.5pt;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8mm;
+}
+.part-numeral {
+  font-family: var(--display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 96pt;
+  line-height: 1;
+  color: var(--ink);
+}
+.part-rule {
+  width: 30mm;
+  height: 0.6pt;
+  background: var(--rule);
+  margin: 10mm auto;
+}
+.part-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 22pt;
+  line-height: 1.18;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  max-width: 100mm;
+}
+.part-tagline {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 11.5pt;
+  color: var(--muted);
+  margin-top: 8mm;
+  max-width: 90mm;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   CAPÍTULO
+   ============================================================ */
+section.chapter {
+  page-break-before: always;
+  break-before: page;
+  string-set: chapter-title attr(data-chapter-title);
+}
+.chapter-opening {
+  text-align: left;
+  margin-top: 14mm;
+  margin-bottom: 12mm;
+}
+.chapter-eyebrow {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 11pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+}
+.chapter-rule {
+  width: 14mm;
+  height: 0.5pt;
+  background: var(--rule);
+  margin: 4mm 0 6mm;
+}
+.chapter-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 24pt;
+  line-height: 1.18;
+  color: var(--ink);
+  margin-bottom: 8mm;
+  letter-spacing: 0.005em;
+}
+
+/* Drop cap no primeiro parágrafo do capítulo */
+.chapter > .chapter-body > p:first-of-type::first-letter {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 4.6em;
+  float: left;
+  line-height: 0.92;
+  margin: 0.05em 0.06em -0.02em -0.02em;
+  color: var(--ink);
+}
+.chapter > .chapter-body > p:first-of-type::first-line {
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  font-size: 1.02em;
+}
+.chapter > .chapter-body > p:first-of-type { text-indent: 0; }
+
+/* ---------- H3 (subseções) ---------- */
+h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 13.5pt;
+  line-height: 1.25;
+  margin: 1.6em 0 0.55em;
+  color: var(--ink);
+  letter-spacing: 0.005em;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+h3::before {
+  content: "";
+  display: block;
+  width: 8mm;
+  height: 0.4pt;
+  background: var(--rule);
+  margin-bottom: 3mm;
+}
+
+/* ---------- Conteúdo "Sobre este livro" e similares (front matter sections) ---------- */
+.frontmatter-section {
+  page-break-before: always;
+  break-before: page;
+  display: block;
+  min-height: 170mm;
+  overflow: hidden;
+}
+.frontmatter-section h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 22pt;
+  line-height: 1.2;
+  margin-top: 14mm;
+  margin-bottom: 8mm;
+  color: var(--ink);
+  letter-spacing: 0.005em;
+}
+
+/* ---------- Apêndices ---------- */
+.appendix-divider {
+  page: no-header;
+  page-break-before: always;
+  break-before: page;
+  display: block;
+  text-align: center;
+  padding: 72mm 24mm 66mm;
+  overflow: hidden;
+}
+.appendix-divider-eyebrow {
+  font-family: var(--display);
+  font-size: 9.5pt;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.appendix-divider-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 40pt;
+  margin-top: 10mm;
+}
+.appendix-divider-rule {
+  width: 24mm;
+  height: 0.6pt;
+  background: var(--rule);
+  margin: 10mm auto;
+}
+.appendix-divider-tag {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 11pt;
+  color: var(--muted);
+}
+
+section.appendix {
+  page-break-before: always;
+  break-before: page;
+}
+section.appendix h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 20pt;
+  line-height: 1.2;
+  margin: 14mm 0 4mm;
+  color: var(--ink);
+}
+section.appendix .appendix-eyebrow {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 10.5pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+section.appendix .appendix-rule {
+  width: 14mm;
+  height: 0.4pt;
+  background: var(--rule);
+  margin: 3mm 0 6mm;
+}
+
+/* Glossário entradas */
+section.appendix p strong:first-child {
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Conclusão */
+section.conclusion {
+  page-break-before: always;
+  break-before: page;
+  string-set: chapter-title "Conclusão";
+}
+section.conclusion .chapter-eyebrow { color: var(--muted); }
+
+/* ---------- Colophon (final) ---------- */
+.colophon {
+  page: no-header;
+  page-break-before: always;
+  break-before: page;
+  display: block;
+  text-align: center;
+  padding: 72mm 24mm 66mm;
+  overflow: hidden;
+}
+.colophon-symbol {
+  font-family: var(--display);
+  font-size: 28pt;
+  color: var(--ink);
+}
+.colophon-rule {
+  width: 18mm;
+  height: 0.4pt;
+  background: var(--rule);
+  margin: 8mm auto;
+}
+.colophon-text {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 11pt;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 92mm;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  text-indent: 0;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+.colophon-text strong { color: var(--ink); font-style: normal; font-weight: 500; letter-spacing: 0.04em; }
+
+/* ---------- Itálicos elegantes em Latin terms ---------- */
+.term-latin { font-style: italic; }
+
+/* ---------- Avoid breaking inside ---------- */
+h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+blockquote, ul, ol { page-break-inside: avoid; break-inside: avoid-page; }
+
+/* ============================================================
+   PREVIEW (apenas visual no navegador, não afeta PDF)
+   ============================================================ */
+@media screen {
+  body {
+    background: #d8d4cb;
+    padding: 24px;
+  }
+  .cover, .title-page, .copyright-page, .epigraph-page,
+  .toc, .part, .chapter, .frontmatter-section,
+  .appendix-divider, .appendix, .conclusion, .colophon {
+    background: var(--paper);
+    width: 152mm;
+    min-height: 229mm; /* screen preview only; print sizing comes from @page */
+    margin: 0 auto 16px;
+    padding: 22mm 18mm 24mm 22mm;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+  }
+  .cover { padding: 0; color: var(--paper); background: var(--ink); }
+}

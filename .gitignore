@@ -1,0 +1,26 @@
+# Dependencies and local runtimes
+node_modules/
+.pdfdeps/
+.king-context/core/
+
+# Secrets
+.env
+.king-context/.env
+
+# King Context generated stores and caches
+.king-context/docs/
+.king-context/research/
+.king-context/data/
+.king-context/_temp/
+.king-context/_learned/
+.king-context/decisions/
+.king-context/adr/
+.king-context/supervision/
+
+# PDF/browser build scratch
+output/.chrome*/
+output/previews*/
+
+# Local OS/editor noise
+.DS_Store
+Thumbs.db

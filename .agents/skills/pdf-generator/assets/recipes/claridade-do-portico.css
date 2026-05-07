@@ -1,0 +1,352 @@
+/* ===== Claridade do Portico Recipe =====
+   Mood: luminous, philosophical, contemporary, editorial.
+   Manuscript fit: classical Stoic rigor reframed for modern urban readers.
+   Corpus anchors:
+   - Body serif: design-de-pdfs-para-ebooks/como-a-cor-e-o-tamanho-da-fonte-influenciam-a-experiencia-do-leitor-em-textos-longos-fontes-serifadas-vs-sans-4277a87cbc
+   - Hierarchy/grid: design-de-pdfs-para-ebooks/cursos-cursos-de-editora-curso-de-diagramador-e1a59-grid-base-e-sistema-de-hierarquia-tipogr-fica
+   - Whitespace: design-de-pdfs-para-ebooks/layout-para-ebook-erros-comuns-a-evitar
+   - Modular rhythm: design-de-pdfs-para-ebooks/reticula-modular-composiciones-por-zonas-o-sectores-disposici-n-y-configuraci-n-de-la-ret-cula-modular-de-un-libro
+   - Cover color: design-de-pdfs-para-ebooks/index.php-rbeg-article-view-108-content
+*/
+
+:root {
+  --ink: #171412;
+  --paper: #fbf7ef;
+  --rule: #a8844a;
+  --muted: #655d55;
+  --whisper: #9b9184;
+  --accent: #b45a3c;
+  --accent-cool: #65724e;
+  --cover-dark: #22231d;
+  --cover-light: #fbf7ef;
+  --serif: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --display: Georgia, "Palatino Linotype", Palatino, serif;
+  --sans: "Segoe UI", Candara, system-ui, sans-serif;
+}
+
+@page {
+  size: 152mm 229mm;
+  margin: 21mm 17mm 24mm 22mm;
+  background: #fbf7ef;
+}
+@page :left {
+  margin: 21mm 22mm 24mm 17mm;
+  background: #fbf7ef;
+  @bottom-left { content: counter(page); font-family: var(--sans); font-size: 8pt; color: var(--whisper); }
+  @top-left { content: "Estoicismo na Era Moderna"; font-family: var(--sans); font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: var(--whisper); }
+}
+@page :right {
+  background: #fbf7ef;
+  @bottom-right { content: counter(page); font-family: var(--sans); font-size: 8pt; color: var(--whisper); }
+  @top-right { content: string(chapter-title); font-family: var(--sans); font-size: 7.5pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--whisper); }
+}
+@page :first {
+  margin: 0;
+  background: #22231d;
+  @top-left { content: ""; }
+  @top-right { content: ""; }
+  @bottom-left { content: ""; }
+  @bottom-right { content: ""; }
+}
+@page no-header {
+  margin: 0;
+  background: #fbf7ef;
+  @top-left { content: ""; }
+  @top-right { content: ""; }
+  @bottom-left { content: ""; }
+  @bottom-right { content: ""; }
+}
+
+body {
+  font-size: 10.7pt;
+  line-height: 1.53;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+p {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+.cover {
+  width: 152mm;
+  height: 229mm;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0 0 0 3mm var(--cover-dark);
+  background:
+    linear-gradient(90deg, rgba(251,247,239,0.16) 0 0.6mm, transparent 0.6mm 7mm),
+    linear-gradient(145deg, var(--cover-dark) 0%, #3a352c 58%, #b45a3c 140%);
+  color: var(--cover-light);
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 11mm;
+  border: 0.6pt solid rgba(251,247,239,0.42);
+}
+.cover::after {
+  content: "";
+  position: absolute;
+  left: 23mm;
+  right: 23mm;
+  bottom: 39mm;
+  height: 1.2mm;
+  background: linear-gradient(90deg, var(--accent-cool), var(--rule), var(--accent));
+}
+.cover-frame { display: none; }
+.cover-mark,
+.title-page-mark,
+.part-eyebrow,
+.chapter-eyebrow,
+.appendix .appendix-eyebrow {
+  font-family: var(--sans);
+  font-style: normal;
+  letter-spacing: 0.16em;
+}
+.cover-mark {
+  font-size: 8pt;
+  color: rgba(251,247,239,0.72);
+}
+.cover-mark::before,
+.cover-mark::after { content: ""; }
+.cover-title {
+  font-size: 34pt;
+  line-height: 1.04;
+  font-weight: 400;
+  color: var(--cover-light);
+}
+.cover-title em {
+  font-style: normal;
+  font-size: 0.82em;
+  color: #ead8bb;
+}
+.cover-subtitle {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12pt;
+  color: rgba(251,247,239,0.82);
+}
+.cover-symbol {
+  font-family: var(--sans);
+  font-size: 18pt;
+}
+.cover-symbol::before {
+  content: "||";
+  color: var(--cover-light);
+  letter-spacing: 0.42em;
+}
+.cover-symbol { color: transparent; }
+.cover-symbol-rule {
+  width: 34mm;
+  background: rgba(251,247,239,0.52);
+}
+.cover-author {
+  font-family: var(--sans);
+  font-size: 9pt;
+  letter-spacing: 0.14em;
+}
+.cover-publisher {
+  font-family: var(--serif);
+  letter-spacing: 0.04em;
+}
+
+.title-page {
+  padding-top: 54mm;
+}
+.cover,
+.title-page,
+.copyright-page,
+.epigraph-page,
+.part,
+.appendix-divider,
+.colophon {
+  overflow: hidden;
+}
+.title-page,
+.copyright-page,
+.epigraph-page,
+.part,
+.appendix-divider,
+.colophon {
+  height: 228.5mm;
+}
+.title-page,
+.copyright-page {
+  height: auto;
+  min-height: 0;
+}
+.title-page-title {
+  white-space: normal;
+  font-size: 32pt;
+  line-height: 1.1;
+}
+.title-page-publisher {
+  margin-top: 8mm;
+}
+.title-page-rule,
+.toc-rule,
+.chapter-rule,
+.appendix-rule,
+.part-rule,
+.appendix-divider-rule,
+.colophon-rule {
+  background: linear-gradient(90deg, var(--accent-cool), var(--rule), var(--accent));
+}
+.copyright-page {
+  background: #f7f1e6;
+  page-break-before: always;
+  break-before: page;
+  display: block;
+  padding: 96mm 24mm 24mm;
+  font-size: 8.2pt;
+  line-height: 1.38;
+}
+.copyright-page p {
+  margin-bottom: 0.42em;
+}
+.epigraph-quote {
+  text-align: center;
+  text-indent: 0;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+.epigraph-page {
+  page-break-before: always;
+  break-before: page;
+  display: block;
+  height: auto;
+  min-height: 0;
+  padding: 82mm 30mm 72mm;
+}
+.epigraph-attr {
+  text-align: center;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+
+.toc h1,
+.frontmatter-section h1,
+.chapter-title,
+.part-title,
+.appendix-divider-title {
+  font-weight: 400;
+}
+.frontmatter-section p {
+  text-align: left;
+}
+.toc-part {
+  color: var(--accent-cool);
+  border-bottom-color: rgba(168,132,74,0.55);
+}
+.toc-chapter-num {
+  font-family: var(--sans);
+  letter-spacing: 0.05em;
+}
+.toc-chapter-leader {
+  border-bottom-color: rgba(155,145,132,0.7);
+}
+
+.part {
+  background:
+    linear-gradient(90deg, rgba(168,132,74,0.16) 0 0.5mm, transparent 0.5mm 7mm),
+    var(--paper);
+  display: block;
+  height: auto;
+  min-height: 0;
+  padding: 66mm 24mm 58mm;
+}
+.part-numeral {
+  color: var(--accent);
+  font-style: normal;
+  font-size: 78pt;
+}
+.part-tagline {
+  font-family: var(--serif);
+  font-size: 11pt;
+  color: var(--muted);
+}
+
+.chapter-opening {
+  margin-top: 10mm;
+  margin-bottom: 10mm;
+  position: relative;
+}
+.chapter-opening::before {
+  content: "";
+  position: absolute;
+  top: -5mm;
+  left: 0;
+  width: 18mm;
+  height: 2mm;
+  background: linear-gradient(90deg, var(--accent), var(--accent-cool));
+}
+.chapter-title {
+  font-size: 22.5pt;
+}
+.chapter > .chapter-body > p:first-of-type::first-letter {
+  color: var(--accent);
+  font-size: 4.25em;
+}
+.chapter > .chapter-body > p:first-of-type::first-line {
+  letter-spacing: 0.04em;
+}
+
+h3 {
+  font-family: var(--sans);
+  font-size: 10.4pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-cool);
+  margin-top: 1.45em;
+}
+h3::before {
+  background: var(--rule);
+}
+
+blockquote {
+  border-left-color: var(--accent);
+  color: var(--muted);
+}
+
+.practice-label + ul,
+.chapter-body h3 + ul {
+  margin-top: 0.3em;
+}
+
+.appendix-divider {
+  background: var(--cover-dark);
+  color: var(--cover-light);
+  display: block;
+  height: auto;
+  min-height: 0;
+  padding: 72mm 24mm 66mm;
+  box-shadow: 0 52mm 0 var(--cover-dark);
+}
+.appendix-divider-title,
+.appendix-divider-eyebrow,
+.appendix-divider-tag {
+  color: var(--cover-light);
+}
+
+.colophon {
+  background: #f7f1e6;
+  display: block;
+  height: auto;
+  min-height: 0;
+  padding: 72mm 24mm 66mm;
+}
+.colophon-symbol {
+  color: var(--accent);
+}
+.colophon-text {
+  text-align: center;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+
+@media screen {
+  body { background: #d6d0c5; }
+}
