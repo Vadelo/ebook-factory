@@ -1,97 +1,32 @@
-# King Context Ebook Factory Use Case
+# Ebook Factory com King Context
 
-Cookbook-ready example of using King Context to create researched ebooks with local Codex skills.
+Este e um use case simples: instale o King Context, abra o Codex neste projeto e peca um ebook.
 
-The use case combines:
+A skill `ebook-factory` faz o resto:
 
-- `ebook-factory`: orchestrates the ebook workflow.
-- `king-context`: searches local indexed corpora with `kctx`.
-- `king-research`: builds reusable research corpora.
-- `pdf-generator`: renders a polished PDF from Markdown.
+- cria os corpora essenciais se eles ainda nao existirem;
+- pesquisa o tema com `king-research`;
+- consulta o conhecimento indexado com `kctx`;
+- escreve o manuscrito em Markdown;
+- entrega para `pdf-generator`;
+- gera HTML e PDF.
 
-The current example topic is:
+## Instalacao
 
-> A evolucao da IA desde seus primordios ate o momento atual de 2026.
-
-## What This Repo Contains
-
-```text
-.agents/skills/
-  ebook-factory/      # ebook orchestration skill
-  king-context/       # kctx search/read skill
-  king-research/      # topic corpus creation skill
-  pdf-generator/      # Markdown -> HTML/PDF skill
-
-.king-context/
-  bin/                # thin Windows wrappers for kctx / king-research / king-scrape
-  .env.example        # API key template, no secrets
-
-output/
-  build-evolucao-ia-2026.js
-  evolucao-da-ia-ate-2026.md
-  evolucao-da-ia-ate-2026.html
-  evolucao-da-ia-ate-2026.pdf
-```
-
-The `output/` files are only an example artifact. They can be removed before publishing if the cookbook should demonstrate full regeneration from scratch.
-
-Generated stores and local runtimes are intentionally ignored:
-
-- `.king-context/core/`
-- `.king-context/research/`
-- `.king-context/docs/`
-- `.king-context/data/`
-- `.king-context/_temp/`
-- `.king-context/_learned/`
-- `node_modules/`
-- `.pdfdeps/`
-
-## Prerequisites
-
-- Node.js and npm.
-- Google Chrome, used by `pdf-generator` to render PDFs.
-- A Codex/Codex-like environment that can load local skills from `.agents/skills`.
-- API keys for research corpus creation:
-  - `EXA_API_KEY`
-  - `OPENROUTER_API_KEY`
-  - optional `JINA_API_KEY`
-  - optional `FIRECRAWL_API_KEY` if you also scrape docs with `king-scrape`
-
-## 1. Install King Context
-
-From the repository root:
+Na raiz do projeto:
 
 ```powershell
 npx @king-context/cli init
+npm install
 ```
 
-This initializes the King Context runtime for the project.
-
-This repo also includes thin wrappers in `.king-context/bin/`:
-
-- `.\.king-context\bin\kctx`
-- `.\.king-context\bin\king-research`
-- `.\.king-context\bin\king-scrape`
-
-The wrappers first try `.king-context/core/venv/Scripts/*.exe`. If that local runtime is not present, they fall back to commands available on `PATH`.
-
-Verify:
-
-```powershell
-.\.king-context\bin\kctx list
-```
-
-On a clean clone, it is fine if no corpora exist yet.
-
-## 2. Configure API Keys
-
-Copy the example env file:
+Copie o arquivo de ambiente:
 
 ```powershell
 Copy-Item .king-context\.env.example .king-context\.env
 ```
 
-Fill in:
+Preencha `.king-context/.env` com suas chaves:
 
 ```text
 EXA_API_KEY=
@@ -100,148 +35,98 @@ JINA_API_KEY=
 FIRECRAWL_API_KEY=
 ```
 
-Do not commit `.king-context/.env`.
+Para este use case, as principais sao `EXA_API_KEY` e `OPENROUTER_API_KEY`, usadas pelo `king-research`.
 
-## 3. Install Node Dependencies
+## Uso
 
-```powershell
-npm install
-```
-
-The PDF build script uses `marked`.
-
-## 4. How The Ebook Factory Bootstraps Itself
-
-The `ebook-factory` skill requires permanent research corpora for editorial workflow, writing, quality, ethics, review, and PDF design.
-
-Required corpora:
-
-- `ebook-factory-workflow`
-- `ebook-factory-writing`
-- `ebook-factory-research-quality`
-- `ebook-factory-business-ethics`
-- `ebook-factory-review-qa`
-- `design-de-pdfs-para-ebooks`
-
-On a clean clone, these corpora are not committed. That is intentional.
-
-The skill now follows this rule:
-
-1. Run `.\.king-context\bin\kctx list`.
-2. Check whether the required corpora exist under `Research`.
-3. For each missing corpus, read the seed prompt in:
+Abra o Codex neste repositorio e peca:
 
 ```text
-.agents/skills/ebook-factory/assets/corpora/
+use ebook-factory para criar um ebook que fale sobre a evolucao da I.A desde seus primordios ate o momento atual de 2026
 ```
 
-4. Create the missing corpus with `king-research`.
-5. Re-run `kctx list`.
-6. Continue only after the core corpora exist.
-
-Manual example:
-
-```powershell
-.\.king-context\bin\king-research "ebook creation workflow for AI-assisted nonfiction ebooks, including editorial brief refinement, audience promise, chapter architecture, source planning, manuscript pipeline, review gates, and production handoff" --medium --yes --name ebook-factory-workflow
-```
-
-In normal use, you should let the `ebook-factory` skill perform this bootstrap.
-
-## 5. Create A New Ebook With The Skill
-
-Ask Codex to use the skill:
+Ou troque o tema:
 
 ```text
-use ebook-factory para criar um ebook que fale sobre a evolução da I.A desde seus primórdios até o momento atual de 2026
+use ebook-factory para criar um ebook sobre produtividade para programadores freelancers
 ```
 
-The skill workflow is:
-
-1. Intake: extract topic, audience, tone, length, output format, and sensitivity.
-2. Brief refiner: turn the prompt into an editorial brief.
-3. Core corpus check: create missing `ebook-factory-*` corpora first.
-4. Editorial research: query workflow, writing, research-quality, review, ethics, and design corpora.
-5. Topic corpus: create or reuse a topic corpus with `king-research`.
-6. Outline: create title, subtitle, parts, chapters, appendices, and source plan.
-7. Manuscript: write Markdown compatible with `pdf-generator`.
-8. Review gate: check factual claims, repetition, unsafe claims, caveats, and structure.
-9. PDF handoff: render HTML/PDF and verify the output.
-
-## 6. Create The Topic Corpus Manually
-
-For the included AI example:
-
-```powershell
-.\.king-context\bin\king-research "evolution of artificial intelligence from early symbolic AI to generative AI agents and multimodal models, including key milestones, AI winters, machine learning, deep learning, transformers, ChatGPT, regulation, industry adoption, safety, open models, and developments through 2026" --medium --yes --name evolucao-ia-2026-ebook
+```text
+use ebook-factory para criar um ebook sobre receitas brasileiras para vender no Paraguai
 ```
 
-Verify:
-
-```powershell
-.\.king-context\bin\kctx list
-.\.king-context\bin\kctx search "transformers generative AI 2026" --doc evolucao-ia-2026-ebook --source research --top 5
+```text
+use ebook-factory para criar um ebook sobre estoicismo aplicado a vida moderna
 ```
 
-For sensitive, fast-changing, legal, medical, financial, or money-making topics, use `--high` instead of `--medium`.
+E isso. A proposta do exemplo e mostrar que o King Context vira a camada de conhecimento local, enquanto a skill conduz o fluxo inteiro.
 
-## 7. Expected Markdown Structure
+## O Que Acontece Por Baixo
 
-The manuscript should use this shape:
+Quando voce chama `ebook-factory`, a skill:
 
-```markdown
-# Title
+1. verifica se existem os corpora essenciais `ebook-factory-*`;
+2. se faltar algum, cria automaticamente com `king-research`;
+3. transforma seu pedido em um brief editorial;
+4. cria ou reutiliza um corpus de pesquisa sobre o tema do ebook;
+5. consulta os corpora com `kctx`;
+6. escreve o Markdown;
+7. revisa estrutura, claims, etica e qualidade;
+8. gera o PDF com `pdf-generator`.
 
-## Subtitle
+Os corpora essenciais nao sao commitados. Eles sao gerados localmente na primeira execucao.
 
-# Nota editorial
+## Exemplo Incluido
 
-# Parte 1. ...
+Este repositorio inclui um exemplo ja gerado:
 
-## Capitulo 1. ...
-
-# Conclusao. ...
-
-# Apendice A. ...
+```text
+output/evolucao-da-ia-ate-2026.md
+output/evolucao-da-ia-ate-2026.html
+output/evolucao-da-ia-ate-2026.pdf
+output/build-evolucao-ia-2026.js
 ```
 
-Do not rely on a manual `# Sumario` for PDF navigation. The PDF generator creates a semantic TOC automatically. If a manual `# Sumario` exists, the build script should treat it as `manual-toc` and skip it in body rendering.
+Voce pode mante-los no repositorio para mostrar o resultado final, ou remove-los se quiser que o cookbook seja 100% regeneravel.
 
-## 8. Render The Included Example PDF
-
-If you keep the included example files:
+Para reconstruir o PDF do exemplo:
 
 ```powershell
 npm run build:example
 ```
 
-Outputs:
-
-- `output/evolucao-da-ia-ate-2026.html`
-- `output/evolucao-da-ia-ate-2026.pdf`
-
-Validate scripts:
+Para checar os scripts:
 
 ```powershell
 npm run check:scripts
 ```
 
-Optional PDF text check, if `pypdf` is installed:
+No Windows, se o PowerShell bloquear `npm.ps1`, use:
 
 ```powershell
-python -c "from pypdf import PdfReader; r=PdfReader('output/evolucao-da-ia-ate-2026.pdf'); print(len(r.pages)); print(r.pages[3].extract_text()[:300]); print(r.pages[4].extract_text()[:300])"
+npm.cmd run check:scripts
 ```
 
-The fixed example should have page 4 as the TOC and page 5 as the editorial note.
+## Estrutura
 
-## 9. Publishing Checklist
+```text
+.agents/skills/
+  ebook-factory/
+  king-context/
+  king-research/
+  pdf-generator/
 
-Before pushing to a public cookbook repo:
+.king-context/
+  bin/
+  .env.example
 
-```powershell
-npm run check:scripts
+output/
+  exemplo gerado
 ```
 
-Confirm these are absent:
+## Para Publicar
+
+Nao commite:
 
 ```text
 .king-context/.env
@@ -257,21 +142,20 @@ output/.chrome*/
 output/previews*/
 ```
 
-The example outputs may stay if you want the cookbook reader to inspect the final result immediately:
+Esses itens ja estao no `.gitignore`.
+
+## Nota Para Mantenedores
+
+Os prompts que recriam os corpora essenciais ficam em:
 
 ```text
-output/evolucao-da-ia-ate-2026.md
-output/evolucao-da-ia-ate-2026.html
-output/evolucao-da-ia-ate-2026.pdf
-output/build-evolucao-ia-2026.js
+.agents/skills/ebook-factory/assets/corpora/
 ```
 
-If you want the repo to be fully generative, remove the example outputs and keep only the instructions.
+A regra esta em:
 
-## 10. Important Implementation Notes
+```text
+.agents/skills/ebook-factory/SKILL.md
+```
 
-- Core corpora are generated, not committed.
-- Seed prompts live in `.agents/skills/ebook-factory/assets/corpora/`.
-- The `pdf-generator` templates guard against TOC pagination bugs by namespacing TOC row classes (`toc-chapter`, `toc-part`, etc.).
-- Avoid using global section classes like `chapter`, `part`, or `frontmatter` inside internal TOC rows, because print CSS may apply page breaks to them.
-- Use `page-break-before` / `break-before`, not `page-break-after`, for PDF sections.
+Se os corpora essenciais nao existirem, a skill deve cria-los antes de escrever qualquer ebook.
